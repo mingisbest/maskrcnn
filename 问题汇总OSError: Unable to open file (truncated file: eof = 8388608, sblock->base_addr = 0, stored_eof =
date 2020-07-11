@@ -1,0 +1,23 @@
+成功解决OSError: Unable to open file (truncated file: eof = 8388608, sblock->base_addr = 0, stored_eof =
+
+
+解决问题
+OSError: Unable to open file (truncated file: eof = 8388608, sblock->base_addr = 0, stored_eof = 257557808)
+
+ 解决思路
+OS错误：无法打开文件（截断的文件：eof=8388608，sblock->base_addr=0，stored_eof=257557808）
+
+解决办法
+很可能是原先的文件加载的不对，也就是说很有可能原先下载的文件没有完全成功下载，所以
+解决办法：再重新下载一遍完整的文件，即可解决。
+注：千万不要再没下载成功就使用！
+文章参考Stack overflow：I tried to fine-tune VGG16 on my dataset, but met the OSError about loading VGG16 weights
+
+
+
+最后，完美解决，大功告成！
+
+ 
+————————————————
+版权声明：本文为CSDN博主「一个处女座的程序猿」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_41185868/article/details/80831046
