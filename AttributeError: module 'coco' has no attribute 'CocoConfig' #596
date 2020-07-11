@@ -1,0 +1,5 @@
+AttributeError: module 'coco' has no attribute 'CocoConfig' #596
+
+# import coco
+from samples.coco import coco
+将前面的导入改成上面，注意import coco是重复的，改为注释
