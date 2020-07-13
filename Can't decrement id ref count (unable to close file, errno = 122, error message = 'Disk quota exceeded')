@@ -1,0 +1,4 @@
+Can't decrement id ref count (unable to close file, errno = 122, error message = 'Disk quota exceeded')
+
+可能是计算资源不足，应用更高的gpu设置
+引用keras code模块来运行程序，而不是pytorch 或者tensorflow
