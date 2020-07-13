@@ -1,0 +1,29 @@
+#首先，在对数据进行标注之前，建议先把所有数据转为统一的尺寸，并且重命名使得更加规整。
+#可以参考下面这段代码（但是我这个代码执行完之后，会多出一倍的图片，比如原来是5张，他会变成10张，我不知道是为什么，但不影响使用，把后面的多出来删掉就好了，按名称排序前5张和后5张是完全相同的）
+
+
+import os
+import os.path
+from PIL import Image
+def ResizeImage(f_path, out_dir, width, height, type):
+    i = 0
+    for root, dirs, files in os.walk(f_path):
+        # 使用os.walk()方法遍历输出一个文件夹下的所有文件名
+        # os.path.join()方法拼接文件名返回所有文件的路径
+        for name in files:
+            file = os.path.join(root, name)
+            img = Image.open(file)
+            out = img.resize((width, height), Image.ANTIALIAS)
+
+            i += 1
+            f_name = str(i) + '.jpeg'
+            out_name = os.path.join(out_dir, f_name)
+            out.save(out_name, type)
+
+f_path = r'*********************'                                 # 图片所在路径
+out_dir = r'****************************/out_dir'         #  图片输出路径
+width = 384                       #  定义输出图片的宽和高
+height = 512
+type = 'jpeg'                     #  定义输出图片类型
+
+ResizeImage(f_path, out_dir, width, height, type)
