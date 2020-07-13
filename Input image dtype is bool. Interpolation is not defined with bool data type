@@ -1,0 +1,10 @@
+Input image dtype is bool. Interpolation is not defined with bool data type
+
+Maybe you can try the skimage version 0.16.2。when I use the version 0.17.2， I faced the same issue.Good luck!Idont know why.
+
+用以下方法尝试
+pip install -U scikit-image==0.16.2
+
+
+
+https://stackoverflow.com/questions/62330374/input-image-dtype-is-bool-interpolation-is-not-defined-with-bool-data-type
