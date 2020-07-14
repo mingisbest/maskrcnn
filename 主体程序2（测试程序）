@@ -30,21 +30,16 @@ from mrcnn import visualize
  
 # Directory to save logs and trained model
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
-
-
-
-
+ 
 # Local path to trained weights file
-COCO_MODEL_PATH = os.path.join(ROOT_DIR, "logs/cat20200714T0043/mask_rcnn_cat_0010.h5")
-# Local path to trained weights file
-#COCO_MODEL_PATH = "/Mask_RCNN/logs/cat20200714T0043/mask_rcnn_cat_0010.h5"   #  模型保存目录
+COCO_MODEL_PATH = "../Mask_RCNN/logs/cat20200714T1008/mask_rcnn_cat_0003.h5"   #  模型保存目录,前面加../
 # Download COCO trained weights from Releases if needed
 if not os.path.exists(COCO_MODEL_PATH):
     utils.download_trained_weights(COCO_MODEL_PATH)
     print("cuiwei***********************")
  
 # Directory of images to run detection on
-IMAGE_DIR = os.path.join(ROOT_DIR, "images")#注意图片文件夹路径
+IMAGE_DIR = os.path.join(ROOT_DIR, "images")
  
 class ShapesConfig(Config):
     """Configuration for training on the toy shapes dataset.
@@ -52,7 +47,7 @@ class ShapesConfig(Config):
     to the toy shapes dataset.
     """
     # Give the configuration a recognizable name
-    NAME = "cat"
+    NAME = "shapes"
  
     # Train on 1 GPU and 8 images per GPU. We can put multiple images on each
     # GPU because the images are small. Batch size is 8 (GPUs * images/GPU).
@@ -105,10 +100,8 @@ model.load_weights(COCO_MODEL_PATH, by_name=True)
 class_names = ['BG', 'cat']   # 注意修改类别名称
 # Load a random image from the images folder
 file_names = next(os.walk(IMAGE_DIR))[2]
-
-
-image = skimage.io.imread("cat017.png")#注意图片文件夹路径 见上面Image_dir,路径
-print(image)
+image = skimage.io.imread("cat017.png")      # 你想要测试的图片
+ 
 a=datetime.now()
 # Run detection
 results = model.detect([image], verbose=1)
