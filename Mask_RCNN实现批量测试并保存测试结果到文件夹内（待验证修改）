@@ -1,0 +1,56 @@
+ #https://blog.csdn.net/king_700/article/details/90639154?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase
+ 
+ Mask-RCNN代码Mask_RCNN/samples路径下有一个demo.ipynb的文件就是用来测试的，所以我们在这个基础上更改一下，其实主要就是我们新建一个test.ipynb，然后把demo.ipynb代码复制过来，根据需要更改。
+
+一、将demo代码更改
+
+将demo中的代码
+
+COCO_MODEL_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
+
+更改为：这里面的h5文件是我们训练的结果，
+
+COCO_MODEL_PATH = os.path.join(ROOT_DIR, "mask_rcnn_shapes_0005.h5")
+
+demo中代码class InferenceConfig(coco.CocoConfig):也需要进行更改，要与自己的config匹配。
+
+class InferenceConfig(shapeconfig.ShapesConfig):
+
+ShapesConfig类中代码：
+
+ from mrcnn.config import Configclass ShapesConfig(Config):    """Configuration for training on the toy shapes dataset.    Derives from the base Config class and overrides values specific    to the toy shapes dataset.    """    # Give the configuration a recognizable name    NAME = "shapes"     # Train on 1 GPU and 8 images per GPU. We can put multiple images on each    # GPU because the images are small. Batch size is 8 (GPUs * images/GPU).    GPU_COUNT = 1    IMAGES_PER_GPU = 1     # Number of classes (including background)    NUM_CLASSES = 1 + 1 # background + 3 shapes     # Use small images for faster training. Set the limits of the small side    # the large side, and that determines the image shape.    IMAGE_MIN_DIM = 448    IMAGE_MAX_DIM = 640     # Use smaller anchors because our image and objects are small    #RPN_ANCHOR_SCALES = (8, 16, 32, 64, 128)  # anchor side in pixels    RPN_ANCHOR_SCALES = (8 * 6, 16 * 6, 32 * 6, 64 * 6, 128 * 6)     # Reduce training ROIs per image because the images are small and have    # few objects. Aim to allow ROI sampling to pick 33% positive ROIs.    TRAIN_ROIS_PER_IMAGE = 32     # Use a small epoch since the data is simple    STEPS_PER_EPOCH = 100     # use small validation steps since the epoch is small    VALIDATION_STEPS = 5
+
+二、注意
+
+IMAGE_MIN_DIM = 448
+
+ IMAGE_MAX_DIM = 640
+
+是图片的尺寸。（按照自己图片的大小更改）
+
+值得注意的是，Mask_RCNN/mrcnn目录下model.py文件中第1815行到1819行代码
+
+h, w = config.IMAGE_SHAPE[:2]        if h / 2**6 != int(h / 2**6) or w / 2**6 != int(w / 2**6):            raise Exception("Image size must be dividable by 2 at least 6 times "                            "to avoid fractions when downscaling and upscaling."                            "For example, use 256, 320, 384, 448, 512, ... etc. ")
+
+需要注意图片尺寸的设定最好符合标准，不然会报错。
+
+三、批量保存
+
+这样我们初步可以测试了，但是只能在ipython中一张图片一张图片的测试，且是从images路径下随机取值。
+
+所以我们需要更改代码，获取images文件夹下图片的张数，作为索引，在test.ipynb文件中更改为如下代码：
+
+count = os.listdir(IMAGE_DIR)for i in range(0,len(count)):    path = os.path.join(IMAGE_DIR, count[i])    if os.path.isfile(path):        file_names = next(os.walk(IMAGE_DIR))[2]        image = skimage.io.imread(os.path.join(IMAGE_DIR, count[i]))        # Run detection        results = model.detect([image], verbose=1)        r = results[0]        visualize.display_instances(count[i],image, r['rois'], r['masks'], r['class_ids'],                             class_names, r['scores'])
+
+这时，需要到visualize.py文件中更改，在Mask_RCNN/mrcnn路径下找到该文件打开，更改display_instances类代码，在该类中添加一个参数count，并加上plt.savefig()保存图片到指定路径下：
+
+if auto_show:        plt.savefig("./test_results/%3s.jpg"%(str(count[4:7])))        plt.show()
+
+图片命名方式是取被测试图片的第4-7位（我的4-7位是数字）命名。（根据需要可自己改）
+
+四、保存结果
+
+在test_results文件夹中可以正常显示。
+————————————————
+版权声明：本文为CSDN博主「蹦跶的小羊羔」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/yql_617540298/article/details/81123147
