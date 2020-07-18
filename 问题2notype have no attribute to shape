@@ -1,0 +1,43 @@
+1.notype have no attribute to shape  最主要的问题
+
+主要原因是pic文件下有 .ipynb_checkpoints，png文件，文件中夹杂有.ipynb_checkpoints，所以读取png文件出现错误，无法正常读取。
+
+2.jupyter notebook加载文件夹时出现多余文件夹ipynb_checkpoints
+使用以下命令，可以找出问题
+dataset_root_path = os.path.join(ROOT_DIR, "samples/celldata/")
+
+#dataset_root_path = "samples/celldata/"    # 你的数据的路径
+
+print(22)
+
+img_floder = dataset_root_path + "pic"
+
+print(24)
+
+mask_floder = dataset_root_path + "cv2_mask"
+
+print(26)
+
+# yaml_floder = dataset_root_path
+
+imglist = os.listdir(img_floder)
+print(imglist)
+如下图
+
+['.ipynb_checkpoints', 'DAY0-1-10X.png', 'DAY0-2-10X.png', 'DAY0-3-10X.png', 'DAY11-15-10X.png', 'DAY11-19-10X.png', 
+'DAY13-11-10X.png', 'DAY13-17-10X.png', 'DAY13-18-10X.png', 'DAY3-14-10X.png', 'DAY3-21-10X.png', 'DAY3-22-10X.png', 'DAY5-16-10X.png', 
+'DAY5-2-10X.png', 'DAY5-7-10X.png', 'DAY7-7-10X.png', 'DAY9-12-10X.png', 'DAY9-9-10X.png', 'day16-10-10x.png', 'day16-16-10x.png', 'day16-17-10x.png', 
+'day16-9-10x.png', 'day18-19-10x.png', 'day18-2-10x.png', 'day18-7-10x.png', 'day18-8-10x.png', 'day20-3-10x.png', 'day20-8-10x.png']
+
+
+3.https://jingyan.baidu.com/article/0a52e3f488cbbebf62ed722d.html
+https://blog.csdn.net/DoReAGON/article/details/95071626
+
+
+（1）os.getcwd()  #获取当前目录
+
+（2）os.chdir("/data/nas/workspace/jupyter/Demo/Models")  #改变目录
+
+（3）ls -a   #列出当前目录的所有文件
+
+（4）rm -rf .ipynb_checkpoints（） #删除这个文件，注意前面一定要加上.
