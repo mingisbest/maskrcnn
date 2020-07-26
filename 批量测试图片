@@ -1,0 +1,27 @@
+
+count = os.listdir(IMAGE_DIR)
+print(count)
+
+for i in range(0,len(count)):
+
+    path = os.path.join(IMAGE_DIR, count[i])
+
+    if os.path.isfile(path):
+
+        file_names = next(os.walk(IMAGE_DIR))[2]
+
+        image = skimage.io.imread(os.path.join(IMAGE_DIR, count[i]))
+
+        # Run detection
+
+        results = model.detect([image], verbose=1)
+
+        r = results[0]
+
+        visualize.display_instances(image, r['rois'], r['masks'], r['class_ids'],  class_names, r['scores'])
+
+if auto_show:
+
+        plt.savefig("./test_results/.png"%(str(count[4:7])))
+
+        plt.show()
