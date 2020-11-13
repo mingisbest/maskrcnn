@@ -1,0 +1,12 @@
+答，重新打开一个窗口进行检测
+注意，检测新图片，可以新建一个test文件测试，但是会出现如out of range 或者
+
+这个时候，要把#cv2.imshow("Instance Segmentation Result", result_image)
+        #cv2.waitKey(3)后面的内容注释掉
+        同时修改train_data_path = os.path.join(ROOT_DIR,"01_SourceData/traindata")
+val_data_path =  os.path.join(ROOT_DIR,"01_SourceData/valdata")
+test_data_path = os.path.join(ROOT_DIR,"01_SourceData/test")
+
+同时注释testset_val = ShapesDataset()
+#testset_val.load_shapes(test_num, test_img_dir, test_mask_dir, test_imglist, test_data_path)
+#testset_val.prepare()
