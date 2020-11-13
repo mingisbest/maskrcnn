@@ -10,3 +10,6 @@ test_data_path = os.path.join(ROOT_DIR,"01_SourceData/test")
 同时注释testset_val = ShapesDataset()
 #testset_val.load_shapes(test_num, test_img_dir, test_mask_dir, test_imglist, test_data_path)
 #testset_val.prepare()
+
+
+一定保证是24位的图片，任何格式都可以
