@@ -1,0 +1,21 @@
+ OSError: [Errno 12] Cannot allocate memory问题
+ 
+ 1.修改config及shape中的程序
+ 
+ 参考https://blog.csdn.net/majin78/article/details/89761370?utm_medium=distribute.pc_relevant.none-task-blog-title-2&spm=1001.2101.3001.4242
+ 
+ 报错三GUP out of memory  00M
+调整参数1
+
+  IMAGE_MIN_DIM = 128
+
+  IMAGE_MAX_DIM = 128
+
+调整参数使数值满足被64整除，设置最小，防止内存不够
+调整参数2
+
+BACKBONE = “resnet50” ；这个是迁移学习调用的模型，分为resnet101和resnet50，电脑性能不是特别好的话，建议选择resnet50，这样网络更小，训练的更快。
+
+修改建议：https://github.com/matterport/Mask_RCNN/wiki
+
+默认的是resnet101，模型影响很大 最后定下的这几参数
