@@ -1,0 +1,11 @@
+这发生在mask rcnn进行验证阶段，出现该错误
+
+https://blog.csdn.net/liaoningxinmin/article/details/107875093?utm_medium=distribute.pc_relevant.none-task-blog-searchFromBaidu-1.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-searchFromBaidu-1.control
+
+原因在于输入与输出的维度不一致
+分析原因当时用的图片尺寸为640*480
+然后307200=640*480 而409600为640*640
+
+这样的话，分析原因可能是resize过程中，对图片进行处理，resize mode为square，生成最大边的图片，进行图片矩阵的相乘
+
+解决办法，：修改config文件中的resize模式为 none，问题解决
