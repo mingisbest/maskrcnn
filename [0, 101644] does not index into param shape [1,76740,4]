@@ -1,0 +1,5 @@
+InvalidArgumentError: indices[12] = [0, 101644] does not index into param shape [1,76740,4]
+	 [[{{node rpn_bbox_loss/GatherNd}}]]
+   
+   
+   原因可能是没有使用gpu计算
