@@ -1,0 +1,4 @@
+mrcnn_class_loss: 0.0000e+00 - mrcnn_bbox_loss: 0.0000e+00 - mrcnn_mask_loss: 0.0000e+00 
+
+原因不详
+可能是程序内的文件参数被修改，最好办法时换回原文件
